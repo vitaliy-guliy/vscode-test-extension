@@ -11,21 +11,8 @@
 import * as vscode from 'vscode';
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
-    vscode.window.showInformationMessage('TEST');
-
     context.subscriptions.push(vscode.commands.registerCommand('test.test-input', async () => {
-        // const port = await vscode.window.showInputBox(
-        //     {
-        //         value: '8080',
-        //         title: 'Exposed Port'
-        //     }
-        // );
-
         const port = await enterExposedPort();
-
-        // const exposure = await vscode.window.showQuickPick(['public', 'internal', 'none'], {
-        //     title: 'Describe how the port should be exposed on the network'
-        // });
 
         const exposure = await enterExposure();
 
@@ -35,39 +22,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
 }
 
-async function enterExposedPort(/* component: devfile.Component */): Promise<number | undefined> {
+async function enterExposedPort(): Promise<number | undefined> {
     const port = await vscode.window.showInputBox({
         value: '8080',
-        title: 'Exposed Port',
-
-        validateInput: (value): string | vscode.InputBoxValidationMessage | undefined | null |
-            Thenable<string | vscode.InputBoxValidationMessage | undefined | null> => {
-            if (!value) {
-                return {
-                    message: 'Exposed port cannot be empty',
-                    severity: vscode.InputBoxValidationSeverity.Error
-                } as vscode.InputBoxValidationMessage;
-            }
-
-            const pValue: number = Number.parseInt(value);
-            if (!Number.isInteger(pValue)) {
-                return {
-                    message: 'Only Integer is allowed',
-                    severity: vscode.InputBoxValidationSeverity.Error
-                } as vscode.InputBoxValidationMessage;
-            }
-
-            // if (component.container && component.container.endpoints) {
-            //     if (component.container.endpoints.find(e => e.targetPort === pValue)) {
-            //         return {
-            //             message: 'This port is already exposed',
-            //             severity: vscode.InputBoxValidationSeverity.Error
-            //         } as vscode.InputBoxValidationMessage;
-            //     }
-            // }
-
-            return undefined;
-        }
+        title: 'Exposed Port'
     });
 
     return Number.parseInt(port);
