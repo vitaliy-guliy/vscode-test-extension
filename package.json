@@ -1,0 +1,44 @@
+{
+    "name": "vscode-test-popups",
+    "publisher": "test",
+    "displayName": "Test",
+    "description": "Test",
+    "version": "0.0.2",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/vitaliy-guliy/vscode-test-extension"
+    },
+    "engines": {
+      "vscode": "^1.74.0"
+    },
+    "categories": [
+      "Other"
+    ],
+    "activationEvents": [
+      "onStartupFinished"
+    ],
+    "main": "./out/extension.js",
+    "scripts": {
+      "compile": "tsc -p ./",
+      "watch": "tsc -watch -p ./",
+      "build-vsix": "vsce package",
+      "cleanup": "rm -f ./vscode-test-popups-0.0.2.vsix && rm -rf ./out && rm -rf node_modules",
+      "build": "npm install && npm run compile && npm run build-vsix"
+    },
+    "dependencies": {
+    },
+    "devDependencies": {
+      "@types/node": "16.x",
+      "@types/vscode": "^1.74.0",
+      "typescript": "^4.9.4",
+      "vsce": "^2.15.0"
+    },
+    "contributes": {
+      "commands": [
+        {
+          "command": "test.test-input",
+          "title": "Test: Test input"
+        }
+      ]
+    }
+  }
