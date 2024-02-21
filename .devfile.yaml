@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: vscode-test-extension
+  name: vscode-test-secrets
 components:
   - name: tools
     container:
