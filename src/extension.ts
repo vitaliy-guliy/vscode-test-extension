@@ -11,62 +11,34 @@
 import * as vscode from 'vscode';
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
-    context.subscriptions.push(vscode.commands.registerCommand('test.test-input', async () => {
-        const port = await enterExposedPort();
+    context.subscriptions.push(vscode.commands.registerCommand('secrets.add-secret', async () => {
+        const value = await vscode.window.showInputBox({
+            value: 'secret message',
+            title: 'Your Secret'
+        });
 
-        const exposure = await enterExposure();
-
-        await vscode.window.showInformationMessage(`Exposed port ${port}:${exposure}`);
-
+        await context.secrets.store('mySecret', value);
     }));
 
-}
+    context.subscriptions.push(vscode.commands.registerCommand('secrets.get-secret', async () => {
+        try {
+            const value = await context.secrets.get('mySecret');
+            if (value) {
+                await vscode.window.showInformationMessage(`Your Secret: ${value}`);
+            } else {
+                await vscode.window.showErrorMessage('Failure to get secret');
+            }
 
-async function enterExposedPort(): Promise<number | undefined> {
-    const port = await vscode.window.showInputBox({
-        value: '8080',
-        title: 'Exposed Port'
-    });
-
-    return Number.parseInt(port);
-}
-
-async function enterExposure(): Promise<'public' | 'internal' | 'none' | undefined> {
-    const dPublic = 'Endpoint will be exposed on the public network';
-    const dInternal = 'Endpoint will be exposed internally outside of the main devworkspace POD';
-    const dNone = 'Endpoint will not be exposed and will only be accessible inside the main devworkspace POD';
-
-    const items: vscode.QuickPickItem[] = [
-        {
-            label: 'public',
-            detail: dPublic
-        },
-        {
-            label: 'internal',
-            detail: dInternal
-        },
-        {
-            label: 'none',
-            detail: dNone
+        } catch (err) {
+            console.error(err);
         }
-    ];
+    }));
 
-    const item = await vscode.window.showQuickPick(items, {
-        title: 'Describe how the port should be exposed on the network'
-    });
+    context.subscriptions.push(vscode.commands.registerCommand('secrets.delete-secret', async () => {
+        await context.secrets.delete('mySecret');
+        await vscode.window.showInformationMessage('Your Secret should be deleted');
+    }));
 
-    if (item) {
-        switch (item.label) {
-            case 'public':
-                return 'public';
-            case 'internal':
-                return 'internal';
-            case 'none':
-                return 'none';
-        }
-    }
-
-    return undefined;
 }
 
 // This method is called when your extension is deactivated
