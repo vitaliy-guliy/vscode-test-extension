@@ -1,8 +1,8 @@
 {
-  "name": "vscode-test-popups",
+  "name": "vscode-test-get-session",
   "publisher": "test",
-  "displayName": "Test",
-  "description": "Test",
+  "displayName": "Test Extension",
+  "description": "Test Extension",
   "version": "0.0.2",
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "build-vsix": "vsce package",
-    "cleanup": "rm -f ./vscode-test-popups-0.0.2.vsix && rm -rf ./out && rm -rf node_modules",
+    "cleanup": "rm -f ./vscode-test-get-session-0.0.2.vsix && rm -rf ./out && rm -rf node_modules",
     "build": "npm install && npm run compile && npm run build-vsix"
   },
   "dependencies": {},
@@ -35,26 +35,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "test.test-input",
-        "title": "Test: Test input"
-      }
-    ],
-    "walkthroughs": [
-      {
-        "id": "test-walkthrough",
-        "title": "Test",
-        "description": "You will be asked for a port and for its exposure. But you will not be able to pick an item because of popup disappear.",
-        "steps": [
-          {
-            "id": "pay-attention",
-            "title": "Ask for port and its visibility",
-            "description": "Click the button to show the popup\n[Show](command:test.test-input)",
-            "media": {
-              "markdown": "media/test.md"
-            },
-            "completionEvents": []
-          }
-        ]
+        "command": "test.test-get-session",
+        "title": "Test: Get session"
       }
     ]
   }

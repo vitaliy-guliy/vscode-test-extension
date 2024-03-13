@@ -10,63 +10,42 @@
 
 import * as vscode from 'vscode';
 
+const DEFAULT = 'Default';
+
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
-    context.subscriptions.push(vscode.commands.registerCommand('test.test-input', async () => {
-        const port = await enterExposedPort();
+    const out = vscode.window.createOutputChannel('Test Extension');
+    out.show(true);
+    out.appendLine('> Test vscode.authentication.getSession(...)');
 
-        const exposure = await enterExposure();
+    context.subscriptions.push(vscode.commands.registerCommand('test.test-get-session', async () => {
+       
+        const choose: string | undefined = await vscode.window.showQuickPick([
+            DEFAULT,
+            'user:email',
+            'read:user',
+            'read:user,user:email,repo,workflow'
+        ], {
+            title: 'Select scopes:'
+        });
 
-        await vscode.window.showInformationMessage(`Exposed port ${port}:${exposure}`);
+        if (choose) {
+            let scopes = [];
+            if (choose !== DEFAULT) {
+                scopes.push(...choose.split(','));
+            }
 
+            out.appendLine(`\n> Get session for scopes [${scopes.toString()}]`);
+
+            let session = await vscode.authentication.getSession('github', scopes, { silent: !0 });
+            console.log(`>> got session: ${scopes}`);
+
+            if (session) {
+                out.appendLine('>> Session received, everything is OK');
+            } else {
+                out.appendLine('>> Session IS NOT RECEIVED! It could be a BUG!!');
+            }
+        }
     }));
-
-}
-
-async function enterExposedPort(): Promise<number | undefined> {
-    const port = await vscode.window.showInputBox({
-        value: '8080',
-        title: 'Exposed Port'
-    });
-
-    return Number.parseInt(port);
-}
-
-async function enterExposure(): Promise<'public' | 'internal' | 'none' | undefined> {
-    const dPublic = 'Endpoint will be exposed on the public network';
-    const dInternal = 'Endpoint will be exposed internally outside of the main devworkspace POD';
-    const dNone = 'Endpoint will not be exposed and will only be accessible inside the main devworkspace POD';
-
-    const items: vscode.QuickPickItem[] = [
-        {
-            label: 'public',
-            detail: dPublic
-        },
-        {
-            label: 'internal',
-            detail: dInternal
-        },
-        {
-            label: 'none',
-            detail: dNone
-        }
-    ];
-
-    const item = await vscode.window.showQuickPick(items, {
-        title: 'Describe how the port should be exposed on the network'
-    });
-
-    if (item) {
-        switch (item.label) {
-            case 'public':
-                return 'public';
-            case 'internal':
-                return 'internal';
-            case 'none':
-                return 'none';
-        }
-    }
-
-    return undefined;
 }
 
 // This method is called when your extension is deactivated
