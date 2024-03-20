@@ -36,14 +36,30 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
             out.appendLine(`\n> Get session for scopes [${scopes.toString()}]`);
 
-            let session = await vscode.authentication.getSession('github', scopes, { silent: true });
+            let sessionSilent = await vscode.authentication.getSession('github', scopes, { silent: true });
+            if (sessionSilent) {
+                out.appendLine('>> Session RECEIVED silently');
+                return;
+            }
+
+            let session1 = await vscode.authentication.getSession('github', scopes, { createIfNone: true });
             // let session = await vscode.authentication.getSession('github', scopes);
 
-            if (session) {
-                out.appendLine('>> Session received, everything is OK');
+            if (session1) {
+                out.appendLine('>> Session1 received, everything is OK');
             } else {
-                out.appendLine('>> Session IS NOT RECEIVED!');
+                out.appendLine('>> Session1 IS NOT RECEIVED!');
             }
+
+            let session2 = await vscode.authentication.getSession('github', scopes, { silent: true });
+            // let session = await vscode.authentication.getSession('github', scopes);
+
+            if (session2) {
+                out.appendLine('>> Session2 received, everything is OK');
+            } else {
+                out.appendLine('>> Session2 IS NOT RECEIVED!');
+            }
+
         }
     }));
 }
