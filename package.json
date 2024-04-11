@@ -1,9 +1,9 @@
 {
-  "name": "vscode-test-popups",
+  "name": "vscode-test-save-secrets",
   "publisher": "test",
-  "displayName": "Test",
-  "description": "Test",
-  "version": "0.0.2",
+  "displayName": "Test Save Secrets",
+  "description": "Test Save Secrets",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/vitaliy-guliy/vscode-test-extension"
@@ -17,12 +17,25 @@
   "activationEvents": [
     "onStartupFinished"
   ],
+  
+  "enabledApiProposals": [
+    "resolvers",
+    "tunnels",
+    "contribViewsRemote",
+    "contribRemoteHelp",
+    "contribMenuBarHome",
+    "extensionRuntime"
+  ],
+  "extensionKind": [
+    "workspace"
+  ],
+
   "main": "./out/extension.js",
   "scripts": {
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "build-vsix": "vsce package",
-    "cleanup": "rm -f ./vscode-test-popups-0.0.2.vsix && rm -rf ./out && rm -rf node_modules",
+    "cleanup": "rm -f ./vscode-test-save-secrets-0.0.1.vsix && rm -rf ./out && rm -rf node_modules",
     "build": "npm install && npm run compile && npm run build-vsix"
   },
   "dependencies": {},
@@ -35,26 +48,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "test.test-input",
-        "title": "Test: Test input"
-      }
-    ],
-    "walkthroughs": [
-      {
-        "id": "test-walkthrough",
-        "title": "Test",
-        "description": "You will be asked for a port and for its exposure. But you will not be able to pick an item because of popup disappear.",
-        "steps": [
-          {
-            "id": "pay-attention",
-            "title": "Ask for port and its visibility",
-            "description": "Click the button to show the popup\n[Show](command:test.test-input)",
-            "media": {
-              "markdown": "media/test.md"
-            },
-            "completionEvents": []
-          }
-        ]
+        "command": "test.setup-context",
+        "title": "Test: Setup context"
       }
     ]
   }
