@@ -4,5 +4,8 @@
 			"name": "vscode-test-extension",
 			"path": ".",
 		},
-	]
+	],
+	"settings": {
+		"workbench.colorTheme": "Kimbie Dark"
+	}
 }
