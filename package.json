@@ -3,7 +3,7 @@
   "publisher": "test",
   "displayName": "Test",
   "description": "Test",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/vitaliy-guliy/vscode-test-extension"
@@ -22,7 +22,7 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "build-vsix": "vsce package",
-    "cleanup": "rm -f ./vscode-test-popups-0.0.2.vsix && rm -rf ./out && rm -rf node_modules",
+    "cleanup": "rm -f ./vscode-test-popups-0.0.1.vsix && rm -rf ./out && rm -rf node_modules",
     "build": "npm install && npm run compile && npm run build-vsix"
   },
   "dependencies": {},
