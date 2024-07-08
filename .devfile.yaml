@@ -36,4 +36,4 @@ commands:
     exec:
       label: 4. Run test script
       component: tools
-      commandLine: test.sh
+      commandLine: /projects/vscode-test-extension/test.sh
