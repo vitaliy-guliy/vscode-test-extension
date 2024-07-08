@@ -32,3 +32,8 @@ commands:
       group:
         kind: build
         isDefault: false
+  - id: run-script
+    exec:
+      label: 4. Run test script
+      component: tools
+      commandLine: test.sh
