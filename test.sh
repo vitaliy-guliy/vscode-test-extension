@@ -1,3 +1,5 @@
 #!/bin/bash
 
-echo "I am here"
+export
+
+echo "Done"
