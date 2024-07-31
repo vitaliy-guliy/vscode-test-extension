@@ -9,6 +9,9 @@ components:
       memoryLimit: 4G
       cpuRequest: '1'
       cpuLimit: '2'
+      env:
+        - name: OPENVSX_REGISTRY_URL
+          value: 'unset'
 
 commands:
   - id: install-dependencies
