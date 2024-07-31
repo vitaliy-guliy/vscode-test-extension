@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: vscode-test-extension
+  name: openvsx-registry-test
 components:
   - name: tools
     container:
