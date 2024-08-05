@@ -10,9 +10,43 @@ components:
       cpuRequest: '1'
       cpuLimit: '2'
 
+  - name: mongo
+    container:
+      image: quay.io/eclipse/che--centos--mongodb-36-centos7:latest-a915db7beca87198fcd7860086989fe8a327a1a4f6508025b64ab28fcc7423b2
+      env:
+        - name: MONGODB_USER
+          value: user
+        - name: MONGODB_PASSWORD
+          value: password
+        - name: MONGODB_DATABASE
+          value: guestbook
+        - name: MONGODB_ADMIN_PASSWORD
+          value: password
+      endpoints:
+        - name: mongodb
+          exposure: internal
+          targetPort: 27017
+          attributes:
+            discoverable: 'true'
+      memoryLimit: 512Mi
+      mountSources: true
+      volumeMounts:
+        - name: mongo-storage
+          path: /var/lib/mongodb/data
+
+  - name: mongo-storage
+    volume:
+      size: 256Mi
+
 commands:
-  - id: run-script
+  - id: run-script-tools
     exec:
-      label: Run test script
+      label: Run test script - tools
       component: tools
-      commandLine: /projects/vscode-test-extension/test.sh
+      commandLine: /projects/vscode-test-extension/test-tools.sh
+
+  - id: run-script-mongo
+    exec:
+      label: Run test script - mongo
+      component: mongo
+      commandLine: /projects/vscode-test-extension/test-mongo.sh
