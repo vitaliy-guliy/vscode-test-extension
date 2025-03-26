@@ -10,6 +10,10 @@ components:
       cpuRequest: '1'
       cpuLimit: '2'
 
+      env:
+        - name: DEFAULT_EXTENSIONS
+          value: '/tmp/atlassian.atlascode-3.0.10.vsix;/tmp/snowflake.snowflake-vsc-1.9.1.vsix'
+
 commands:
   - id: install-dependencies
     exec:
@@ -32,3 +36,16 @@ commands:
       group:
         kind: build
         isDefault: false
+
+  - id: add-default-extensions
+    exec:
+      # put your tooling container name here
+      component: tools
+      commandLine: |
+        # download regular binary
+        curl https://open-vsx.org/api/atlassian/atlascode/3.0.10/file/atlassian.atlascode-3.0.10.vsix --location -o /tmp/atlassian.atlascode-3.0.10.vsix
+        curl https://open-vsx.org/api/snowflake/snowflake-vsc/1.9.1/file/snowflake.snowflake-vsc-1.9.1.vsix --location -o /tmp/snowflake.snowflake-vsc-1.9.1.vsix
+
+events:
+  postStart:
+    - add-default-extensions
