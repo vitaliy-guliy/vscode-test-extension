@@ -32,3 +32,13 @@ commands:
       group:
         kind: build
         isDefault: false
+  - id: use-empty-cer
+    exec:
+      # put your tooling container name here
+      component: tools
+      commandLine: |
+        mkdir -p /tmp/node-extra-certificates
+        ln -s /projects/vscode-test-extension/empty.crt /tmp/node-extra-certificates/ca.crt
+events:
+  postStart:
+    - create-symlink
