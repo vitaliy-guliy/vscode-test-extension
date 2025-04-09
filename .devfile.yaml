@@ -9,6 +9,9 @@ components:
       memoryLimit: 4G
       cpuRequest: '1'
       cpuLimit: '2'
+      env:
+        - name: DEVWORKSPACE_NAME
+          value: "long+workspace-name-to-test-desktop-visual-studio-code"
 
 commands:
   - id: install-dependencies
