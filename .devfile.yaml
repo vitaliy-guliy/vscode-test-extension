@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: vscode-test-extension
+  name: long-workspace-name-to-test-desktop-visual-studio-code
 components:
   - name: tools
     container:
