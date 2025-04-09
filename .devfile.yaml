@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: my_workspace
+  name: my_workspace.1
 components:
   - name: tools
     container:
