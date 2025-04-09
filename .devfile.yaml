@@ -9,9 +9,6 @@ components:
       memoryLimit: 4G
       cpuRequest: '1'
       cpuLimit: '2'
-      env:
-        - name: DEVWORKSPACE_NAME
-          value: "long+workspace-name-to-test-desktop-visual-studio-code"
 
 commands:
   - id: install-dependencies
@@ -35,3 +32,12 @@ commands:
       group:
         kind: build
         isDefault: false
+  - id: patch-che-code-server
+    exec:
+      # put your tooling container name here
+      component: tools
+      commandLine: |
+        sed -i 's/process\.env\.DEVWORKSPACE_NAME\.length > 20/process\.env\.DEVWORKSPACE_NAME\.length > 100/g' /che-code-server/server/out/che-code-server.js
+events:
+  postStart:
+    - patch-che-code-server
