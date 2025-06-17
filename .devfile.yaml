@@ -9,6 +9,9 @@ components:
       memoryLimit: 4G
       cpuRequest: '1'
       cpuLimit: '2'
+      env:
+        - name: NODE_EXTRA_CA_CERTS
+          value: '/projects/vscode-test-extension/empty.crt'
 
 commands:
   - id: install-dependencies
@@ -32,13 +35,3 @@ commands:
       group:
         kind: build
         isDefault: false
-  - id: use-custom-certificate
-    exec:
-      # put your tooling container name here
-      component: tools
-      commandLine: |
-        mkdir -p /tmp/node-extra-certificates
-        ln -s /projects/vscode-test-extension/empty.crt /tmp/node-extra-certificates/ca.crt
-events:
-  postStart:
-    - use-custom-certificate
